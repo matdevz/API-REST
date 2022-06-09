@@ -12,7 +12,7 @@ mongoose.connect(process.env.DATABASE_URL, {
 	useUnifiedTopology: true,
 });
 
-app.use('/user', router);
+app.use('/user', express.json(), router);
 
 app.listen(process.env.PORT, () =>
 	console.log('listening on port ' + process.env.PORT)
