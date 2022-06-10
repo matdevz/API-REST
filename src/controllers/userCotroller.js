@@ -1,5 +1,6 @@
-const bcrypt = require('bcryptjs/dist/bcrypt');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs/dist/bcrypt');
 
 const register = async (req, res) => {
 	const selectedUser = await User.findOne({ email: req.body.email });
@@ -36,6 +37,9 @@ const login = async (req, res) => {
 		return res.status(400).send('Email or password incorrect');
 	}
 
+	const token = jwt.sign({ _id: selectedUser._id }, process.env.SECRET);
+
+	res.header('authorization-tokem', token);
 	res.send('User logged in successfully');
 };
 
