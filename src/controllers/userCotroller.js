@@ -37,9 +37,12 @@ const login = async (req, res) => {
 		return res.status(400).send('Email or password incorrect');
 	}
 
-	const token = jwt.sign({ _id: selectedUser._id }, process.env.SECRET);
+	const token = jwt.sign(
+		{ _id: selectedUser._id, admin: selectedUser.admin },
+		process.env.SECRET
+	);
 
-	res.header('authorization-tokem', token);
+	res.header('authorization-token', token);
 	res.send('User logged in successfully');
 };
 
